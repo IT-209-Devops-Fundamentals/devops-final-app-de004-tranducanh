@@ -3,6 +3,16 @@
 Bộ mã nguồn khởi đầu cho bài thi **DevOps Fundamentals – Cuối kỳ**.
 Ứng dụng hiển thị **danh sách hàng tồn kho** lấy từ MySQL thông qua Spring Boot, trả về **dạng JSON** qua Nginx (reverse proxy).
 
+## Thông tin sinh viên
+
+- **Họ và tên**: Trần Đức Anh
+- **Mã sinh viên**: N24DTCN003
+- **Lớp**: CNTT1
+- **Email**: traducanh31032006@gmail.com
+- **GitHub Username**: TranDucAnh3103
+- **Port triển khai (APP_PORT)**: 8086
+- **Tên Compose Project**: tranducanh-de004
+
 ## Kiến trúc
 
 ```
@@ -21,7 +31,7 @@ Trình duyệt ── http://<IP_máy_chủ>:<APP_PORT>
 Dấu ★ là phần sinh viên phải làm.
 
 ```
-devops-final-de004-nguyenvana/     ← Mã nguồn Spring Boot 4 (Java 21, Gradle) – CÓ SẴN
+devops-final-de004-tranducanh/     ← Mã nguồn Spring Boot 4 (Java 21, Gradle) – CÓ SẴN
 ├── src/main/java/com/ptit/devops/inventory/   ← Controller, Entity, Repository
 ├── src/main/resources/application.properties
 ├── build.gradle                   ← Build ra file build/libs/app.jar
@@ -68,6 +78,6 @@ Phần **sinh viên phải làm** (xem đề thi):
 ```bash
 docker compose --env-file student.env up -d --build
 docker compose --env-file student.env ps
-curl http://localhost:<APP_PORT>/api/items
+curl http://localhost:8086/api/items
 docker compose --env-file student.env down
 ```

@@ -14,15 +14,15 @@ COPY build.gradle settings.gradle ./
 RUN gradle bootJar --no-daemon -x test || true
 
 # Copy mã nguồn rồi đóng gói file JAR (bỏ qua test)
-COPY --from=build /workspace/src ./src
-RUN gradle build --no-daemon -x test
+COPY src ./src
+RUN gradle bootJar --no-daemon -x test
 
 # ---------- Stage 2: runtime - chỉ chứa JRE 21 + file JAR ----------
 FROM eclipse-temurin:21-jre-alpine AS runtime
 
 # Phiên bản ứng dụng truyền vào lúc build (docker compose: build-arg APP_VERSION)
 ARG APP_VERSION=dev
-ENV APP_VERSION=______ \
+ENV APP_VERSION=${APP_VERSION} \
     JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=75"
 
 WORKDIR /app
@@ -30,10 +30,10 @@ WORKDIR /app
 # Chạy ứng dụng bằng user thường, không dùng root
 RUN addgroup -S spring && adduser -S spring -G spring
 # Chỉ lấy file JAR từ stage build
-COPY ______ /app/app.jar
-USER ______
+COPY --from=build /workspace/build/libs/app.jar /app/app.jar
+USER spring:spring
 
-EXPOSE 8086
+EXPOSE 8080
 
 # ENTRYPOINT dạng exec (mảng JSON)
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
