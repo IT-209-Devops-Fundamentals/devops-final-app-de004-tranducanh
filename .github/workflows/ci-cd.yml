@@ -4,6 +4,19 @@
 #  - Sinh viên điền các ô ______ tại các dòng TODO 1-6.
 #  - job build : kiểm tra student.env -> build & chạy thử -> smoke test -> push image GHCR
 #  - job deploy: SSH vào server -> cập nhật mã nguồn -> pull image -> khởi động lại
+
+#github secrets: SERVER_HOST, SERVER_USER, SERVER_SSH_KEY (private key, không passphrase)
+# SERVER_HOST:160.30.160.103
+# SERVER_USER:stephen-devops
+# SERVER_SSH_KEY:
+#-----BEGIN OPENSSH PRIVATE KEY-----
+# b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+# QyNTUxOQAAACBA6CoXp039KClt2W1aKnao08kj6tDU7fQI4lKigZO6TAAAAKDMlbkdzJW5
+# HQAAAAtzc2gtZWQyNTUxOQAAACBA6CoXp039KClt2W1aKnao08kj6tDU7fQI4lKigZO6TA
+# AAAECeycKFsF53DxrMWRVuWzEHCyC3gL06z6wHdyLq4bIl1kDoKhenTf0oKW3ZbVoqdqjT
+# ySPq0NTt9AjiUqKBk7pMAAAAGHRyYW5kQFN0ZXBoZW4tR2FtbWluZ2xhcAECAwQF
+# -----END OPENSSH PRIVATE KEY-----
+
 # =============================================================================
 name: CI/CD
 
@@ -59,7 +72,7 @@ jobs:
           APP_VERSION: ${{ github.sha }}
         # TODO 1: build và khởi động toàn bộ hệ thống bằng Docker Compose (đọc student.env),
         #         chờ các service sẵn sàng (gợi ý: --wait --wait-timeout 300)
-        run: ______
+        run: --wait --wait-timeout 300 docker compose --env-file student.env up -d --build
 
       - name: Smoke test
         run: |
